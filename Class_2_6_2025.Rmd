@@ -1,0 +1,30 @@
+---
+title: "Class_2_6_2025"
+author: "ATS"
+date: "2025-02-06"
+output: html_document
+---
+
+# Data management plans.
+
+-   More for reusing the data in the future, not as much for reproducibility.
+
+-   Living documents components:
+
+-   Expected data types
+
+-   Formats
+
+    -   Text, csv, fasta
+
+-   Storage
+
+    -   Where? Short term - Box - One Drive - ASC. Long term - Github - SRA - AU aurora - Ag Data Commons (USDA database)
+
+-   Roles & responsibilities
+
+-   Budget
+
+### There is an example of a DMP on canvas for a grant by Zach
+
+## Use of Generative AI in coding assignment
