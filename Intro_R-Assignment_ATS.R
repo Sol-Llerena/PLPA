@@ -66,3 +66,11 @@ sub4<- zdf$zsquared[180]
 
 
 # o Annotate your code, commit the changes and push it to your GitHub
+
+
+
+Tips<-read.csv(file = "TipsR.csv",na.strings = ".")
+
+View(Tips)
+
+str(Tips)
