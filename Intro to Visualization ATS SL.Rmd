@@ -1,0 +1,110 @@
+---
+title: "Intro to Visualization ATS SL"
+author: "ATS"
+date: "2025-02-13"
+output: html_document
+---
+
+
+
+### Partner 1: <u>Alex Swystun</u>				
+
+
+### Partner 2:	<u>Sol Llerena</u>
+
+1. 
+-	5 pts. Explain the following concepts about ggplot 
+--	What three elements do you need to produce a ggplot?
+    You need a dataset or matrix. You will also need layers to add to your ggplot, such as "geoms". 
+    
+--  What is a geom? 
+    A visual representation of the data into either line, bar, etc. graphs. 
+--	What is a facet? 
+    A facet is a way to subset your data from different layers (or variables).
+    
+--	Explain the concept of layering. 
+    ggplot has layers like an onion, where ggplot() starts as the first layer, like a blank canvas. Then you can keep adding plot characteristics (layers) to make a complete final representation of the data.
+--	Where do you add x and y variables and map different shapes, colors, and other attributes to the data? 
+    There are many options to add the x / y variables, as well as the colors and shapes. You can either add them to the base ppglot layer, or you could add them into your geoms, to add different shapes and colors. This lets the user specify exactly how they want the data to be represented.
+    
+    
+    
+
+2. 4 pts. Make a boxplot using ggplot with DON as the y variable, treatment as the x variable, and color mapped to the wheat cultivar. Show the code you use to load the libraries you need to read in the data and make the plot. Change the y label to “DON (ppm)” and make the x label blank.
+
+
+
+```{R}
+library(ggplot2)
+
+MycotoxinData <- read.csv("MycotoxinData.csv", na.strings = "na")
+MycotoxinData$DON <- as.numeric(MycotoxinData$DON)
+
+
+
+str(MycotoxinData)
+
+
+
+MycotoxinData$DON
+
+
+
+```
+
+
+
+## Here is our boxplot, with 8 rows missing from NA data in the DON column. 
+
+```{R}
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar))+
+geom_boxplot()+
+  ylab("DON (ppm)")
+  xlab("")
+
+```
+
+
+
+
+
+3.
+3.	2 pts. Now convert this data into a bar chart with standard-error error bars using the stat_summary() command.
+
+
+```{R}
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge")+
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")
+
+
+
+```
+
+
+
+
+
+
+
+```{R}
+
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar))+
+  stat_summary(fun = mean, geom = "bar", position = "dodge")+
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")+
+  geom_point(position=position_jitterdodge(dodge.width=0.9), pch = 21)
+
+
+```
+
+
+
+
+
