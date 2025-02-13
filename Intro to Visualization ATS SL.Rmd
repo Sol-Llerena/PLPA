@@ -88,23 +88,81 @@ ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar))+
 
 
 
-
+4. 4.	2 pts. Add points to the foreground of the boxplot and bar chart you made in question 3 that show the distribution of points over the boxplots. Set the shape = 21 and the outline color black (hint: use jitter_dodge). 
 
 
 ```{R}
 
 
-ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar))+
-  stat_summary(fun = mean, geom = "bar", position = "dodge")+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, color = Cultivar, fill = Cultivar)) 
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
   stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
   ylab("DON (ppm)")+
   xlab("")+
-  geom_point(position=position_jitterdodge(dodge.width=0.9), pch = 21)
-
+  geom_point(color = "black", position=position_jitterdodge(dodge.width=0.9), pch = 21)
+  
 
 ```
 
 
 
 
+
+5.
+5.	2 pts. Change the fill color of the points and boxplots to match some colors in the following colorblind pallet. 
+
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+
+```{R}
+cbbPalette <- c( "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7","#000000")
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette)+
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")+
+  geom_point(position=position_jitterdodge(dodge.width=0.9), pch = 21) 
+
+```
+
+
+
+
+6.	2 pts. Add a facet to the plots based on cultivar.
+
+```{R}
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette)+
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")+
+  geom_point(position=position_jitterdodge(dodge.width=0.9), pch = 21)+
+  facet_wrap(~Cultivar)
+
+
+```
+
+
+
+7. Add transparency
+
+```{R}
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette) +
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")+
+  geom_point(position=position_jitterdodge(dodge.width=0.9), pch = 21)+
+  facet_wrap(~Cultivar)
+
+```
 
