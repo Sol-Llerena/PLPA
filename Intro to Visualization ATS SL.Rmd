@@ -8,11 +8,10 @@ output:
 ---
 
 
+### Partner 1: Alex Swystun			
 
-### Partner 1: <u>Alex Swystun</u>				
 
-
-### Partner 2:	<u>Sol Llerena</u>
+### Partner 2:	Sol Llerena
 
 1. 
 -	5 pts. Explain the following concepts about ggplot 
