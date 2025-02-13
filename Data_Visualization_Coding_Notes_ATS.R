@@ -52,7 +52,7 @@ ggplot(mtcars, aes(wt,mpg)) +
   ylab("Miles per gallon")
 
 
-
+# Save this color scheme for later
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_smooth(method = lm, se = FALSE) +
   geom_point(aes(size = cyl,color = wt)) +
