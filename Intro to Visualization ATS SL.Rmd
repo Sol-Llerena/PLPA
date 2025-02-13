@@ -2,7 +2,9 @@
 title: "Intro to Visualization ATS SL"
 author: "ATS"
 date: "2025-02-13"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 
@@ -192,5 +194,20 @@ ggplot(MycotoxinData,  aes(x = Treatment, y = DON, color = DON)) +
 
 
 9.	4 pts. Annotate your code and push it to github. Now, find a partner if you don’t already have one and have that person “fork” the repository containing the code you just pushed to github. Describe what just happened when you “forked” the repository.  Please include the links (URLs) below to answer this question. 
+
+When we forked the repo, it created a copy on her github. Now she has a working copy of the repo that she can edit, and collaborate with. If a change is made, she can request a merge pull, and I get a notification. If I accept the merge, the master branch is updated on my github, and she gets an email saying I accepted it. 
+
+[Alex's url](https://github.com/Aswystun/PLPA)
+
+[Sol's url](https://github.com/Sol-Llerena/PLPA)
+
+
+
+
+
+
+
+
+
 
 
