@@ -208,5 +208,31 @@ When we forked the repo, it created a copy on her github. Now she has a working 
 
 
 
+---------------------------------------------- notes
 
+
+
+```{R}
+
+
+
+View(MycotoxinData)
+
+MycotoxinData$Treatment <- factor(MycotoxinData$Treatment,
+                                  levels= c("NTC","Fg","Fg + 37","Fg + 40", "Fg + 70"))
+
+ggplot(MycotoxinData, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette) +
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge")+
+  ylab("DON (ppm)")+
+  xlab("")+
+  geom_point(alpha = 0.65, position=position_jitterdodge(dodge.width=0.9), pch = 21)+
+  facet_wrap(~Cultivar)
+
+
+
+
+```
 
