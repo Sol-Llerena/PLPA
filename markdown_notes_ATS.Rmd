@@ -1,0 +1,104 @@
+---
+title: "Markdown_Notes"
+author: "ATS"
+date: "2025-02-27"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+  md_document:
+    variant: gfm
+  word_document:
+  pdf_document:
+---
+
+
+```{r R code example, include=TRUE, echo=FALSE}
+
+summary(mtcars)
+
+```
+
+```{r Include figures}
+library(knitr)
+library(ggplot2)
+library(markdown)
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+
+```
+
+
+# Title One
+## Title Two
+### Title Three
+
+*Italics*
+**Bold**
+
+
+
+- Bullet
+- Point
+- List
+  - with
+  - sub-points
+
+[Alex's PLPA Github](https://github.com/Aswystun/PLPA)
+
+## Pictures 
+
+![example pic](pictures/assay_example.jpg)
+
+
+
+
+
+
+
+
+```{r Include Figures}
+library(knitr)
+library(ggplot2)
+library(markdown)
+
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black")
+
+
+```
+
+
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+
+
+
+
+
+
+
+```{r}
+
+library(knitr)
+
+kable(head(mtcars, n = 5), digits = 3, format = "markdown")
+
+```
+
+
+
+
+
+
+
+
