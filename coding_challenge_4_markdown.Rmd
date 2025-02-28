@@ -1,0 +1,32 @@
+---
+title: "Coding_Challenge_4_Markdown"
+author: "ATS_SLL"
+date: "2025-02-28"
+output: pdf_document
+---
+
+### Partner 1: Alex Swystun
+
+### Partner 2: Sol Llerena
+
+1.  
+
+-   4 pts. Explain the following
+    -   YAML header
+    The YAML header is a header used at the top of R Markdown documents that effects the rendering of the output of the document. 
+    -   Literate programming
+    Literal programming is when chunks of code are well annotated in a way which describes code in a convenient way. 
+    
+    
+    
+2.
+
+
+
+
+
+
+
+
+
+
