@@ -148,7 +148,7 @@ b.	A file tree of your GitHub repository.
 
 6.	1 pt. Please provide me a clickable link to your GitHub
 
-[My Github for this Class](https://github.com/Aswystun/PLPA)
+[**My Github for this Class**](https://github.com/Aswystun/PLPA)
 
 
 
