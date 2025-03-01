@@ -49,7 +49,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
 ## Pictures 
 
-![example pic](pictures/assay_example.jpg)
+![example pic](../pictures/assay_example.jpg)
 
 
 
