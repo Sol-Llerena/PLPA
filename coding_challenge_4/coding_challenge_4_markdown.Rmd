@@ -1,0 +1,155 @@
+---
+title: "Coding_Challenge_4_Markdown"
+author: "ATS_SLL"
+date: "2025-02-28"
+output:
+  pdf_document:
+    toc: true
+---
+
+
+### Partner 1: Alex Swystun
+
+### Partner 2: Sol Llerena
+
+Data for this project can be found [**here**](https://doi.org/10.1094/PDIS-06-21-1253-RE).
+
+
+1.  
+
+-   4 pts. Explain the following
+  - YAML header:
+  **The YAML header is a header used at the top of R Markdown documents that effects the rendering of the output of the document.**
+  - Literate programming:
+  **Literate programming is when chunks of code are well annotated in a way which describes code in a convenient way.**
+    
+    
+    
+2.	
+- 6 pts. Take the code you wrote for coding challenge 3, question 5, and incorporate it into your R markdown file. Some of you have already been doing this, which is great! Your final R markdown file should have the following elements.
+	- At the top of the document, make a clickable link to the manuscript where these data are published.
+  - Read the data using a relative file path with na.strings option set to “na”. This means you need to put the Mycotoxin.csv file we have used for the past two weeks into your directory, which git tracks. 
+
+```{r, include=TRUE}
+MycotoxinData <- read.csv(file = "../data/MycotoxinData.csv", na.strings = "na")
+
+library(tidyverse)
+library(ggpubr)
+library(ggrepel)
+library(ggplot2)
+
+```
+	- Make a separate code chunk for the figures plotting the 
+  -- DON data:
+
+```{r, warning = FALSE}
+cbbPalette <- c( "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7","#000000")
+
+library(ggplot2)
+
+DON <- ggplot(MycotoxinData, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette) +
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  ylab("DON (ppm)") +
+  xlab("") +
+  geom_point(alpha = 0.65, position=position_jitterdodge(dodge.width=0.9), pch = 21) +
+  theme_classic()
+
+DON <- DON + 
+  #geom_pwc(method = "t_test")
+    geom_pwc(aes(group = Treatment), method = "t_test")
+
+DON
+
+```
+
+  -- 15ADON data:
+
+```{r, warning=FALSE}
+library(ggplot2)
+ADON <- ggplot(MycotoxinData, aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette) +
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  ylab("X15ADON (ppm)") +
+  xlab("") +
+  geom_point(alpha = 0.65, position=position_jitterdodge(dodge.width=0.9), pch = 21) +
+  theme_classic()
+
+ADON <- ADON + 
+    geom_pwc(aes(group = Treatment), method = "t_test")
+
+ADON
+```
+
+    - Seedmass data:  
+
+
+```{r, warning=FALSE}
+library(ggplot2)
+SeedMass <- ggplot(MycotoxinData, aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
+  scale_fill_manual(values = cbbPalette) +
+  scale_color_manual(values = cbbPalette) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  ylab("Seed Mass (mg)") +
+  xlab("") +
+  geom_point(alpha = 0.65, position=position_jitterdodge(dodge.width=0.9), pch = 21) +
+  theme_classic()
+
+SeedMass <- SeedMass + 
+    geom_pwc(aes(group = Treatment), method = "t_test")
+
+SeedMass
+
+```
+
+
+    - and one for the three combined using ggarrange.
+
+
+```{r, warning=FALSE}
+
+figure1 <- ggarrange(
+  DON,  
+  ADON,  
+  SeedMass,  
+  labels = "auto",  
+  nrow = 3, 
+  ncol = 1,  
+  legend = FALSE  
+)
+
+figure1
+
+```
+
+
+
+
+3.	6 pts. Knit your document together in the following formats: 
+  -	.docx (word document) OR .pdf with a table of contents
+  -	GitHub flavored markdown (.md file). 
+
+
+4.	2 pts. Push the .docx or .pdf and .md files to GitHub inside a directory called Coding Challenge 4. 
+
+
+5.	6 pts. Now edit, commit, and push the README file for your repository and include the following elements.
+
+a.	A clickable link in your README to your GitHub flavored .md file
+b.	A file tree of your GitHub repository. 
+
+6.	1 pt. Please provide me a clickable link to your GitHub
+
+
+
+
+
+
+
+
+
