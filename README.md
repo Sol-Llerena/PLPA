@@ -14,27 +14,27 @@ This repository currently has five directories.
 ### Directory Tree:
 ```
 .
-├── [**PLPA.Rproj**](https://github.com/Aswystun/PLPA/blob/master/PLPA.Rproj)
-├── **coding_challenge_4**
+├── PLPA.Rproj
+├── coding_challenge_4
 │   ├── coding_challenge_4_markdown.Rmd
 │   └── coding_challenge_4_markdown.pdf
-├── **data**
+├── data
 │   ├── BacterialAlpha.csv
 │   ├── Bull_richness.csv
 │   ├── MycotoxinData.csv
 │   ├── TipsR.csv
 │   ├── corr.csv
 │   └── diff_abund.csv
-├── **pictures**
+├── pictures
 │   └── assay_example.jpg
-├── **plots**
+├── plots
 │   ├── Rplot.png
 │   ├── Rplot15
 │   ├── Rplot15.png
 │   ├── RplotDON.png
 │   ├── Rplotcombined.png
 │   └── Rplotseedmass.png
-└── **previous_assignments**
+└── previous_assignments
     ├── Class_2_6_2025.Rmd
     ├── Data_Visualization_Coding_Notes_2_ATS.R
     ├── Data_Visualization_Coding_Notes_ATS.R
