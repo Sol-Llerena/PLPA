@@ -40,7 +40,7 @@ library(ggplot2)
 
 ```
 	- Make a separate code chunk for the figures plotting the 
-  -- DON data:
+### DON data:
 
 ```{r, warning = FALSE}
 cbbPalette <- c( "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7","#000000")
@@ -65,7 +65,7 @@ DON
 
 ```
 
-  -- 15ADON data:
+### 15ADON data:
 
 ```{r, warning=FALSE}
 library(ggplot2)
@@ -85,7 +85,7 @@ ADON <- ADON +
 ADON
 ```
 
-    - Seedmass data:  
+### Seedmass data:  
 
 
 ```{r, warning=FALSE}
@@ -108,7 +108,7 @@ SeedMass
 ```
 
 
-    - and one for the three combined using ggarrange.
+### and one for the three combined using ggarrange.
 
 
 ```{r, warning=FALSE}
@@ -136,16 +136,18 @@ figure1
 
 
 4.	2 pts. Push the .docx or .pdf and .md files to GitHub inside a directory called Coding Challenge 4. 
+[**Done**](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_4)
 
 
 5.	6 pts. Now edit, commit, and push the README file for your repository and include the following elements.
 
 a.	A clickable link in your README to your GitHub flavored .md file
+
 b.	A file tree of your GitHub repository. 
 
 6.	1 pt. Please provide me a clickable link to your GitHub
 
-
+[My Github for this Class](https://github.com/Aswystun/PLPA)
 
 
 
