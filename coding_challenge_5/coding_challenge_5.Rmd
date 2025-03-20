@@ -96,4 +96,6 @@ ggplot(aes(x = Time_Point, y = value, color= diff)) + # Plot it
 directory called Coding Challenge 5. Provide me a link to
 your github written as a clickable link in your .pdf or .docx
 
+[Here is our link to coding challenge 5 :)](https://github.com/Sol-Llerena/PLPA/blob/master/coding_challenge_5/coding_challenge_5.md)
+
 
