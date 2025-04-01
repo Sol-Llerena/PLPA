@@ -1,0 +1,220 @@
+---
+title: "Hw Notes Loops and Functions"
+author: "ATS"
+date: "2025-04-01"
+output:
+  md_document:
+    variant: markdown_github
+  html_document: default
+---
+
+Dependencies needed: 
+
+```{r}
+
+library(readr)
+library(ggplot2)
+library(drc) 
+library(tidyverse)
+library(dplyr)
+library(drc)
+
+
+```
+
+
+## Anatomy of a function:
+
+sample.function <- function(... variable goes here ...){
+  .... code goes here.... 
+  return(... output ...)
+}
+
+
+## Making a function
+
+```{r}
+F_to_C <- function(fahrenheit_temp){
+  celsius <- (5*(fahrenheit_temp - 32)/9)
+  return(celsius)
+}
+
+F_to_C(32)
+
+```
+
+### My attempt
+using : F = C x (9/5)+32
+
+```{r}
+C_to_F <- function(cels_temp){
+  fahrenheit <- (9/5)*(cels_temp)+32
+  return(fahrenheit)
+}
+
+C_to_F(32)
+
+```
+### It worked!
+
+
+
+
+# Iterations:
+
+
+```{r}
+rep("A", 3)
+rep(c("A","B"),3)
+rep(c("A","B","C"),each=3)
+rep(c("A","B","C"),times=3)
+rep(c("A","B","C"),each=3,times=3)
+
+
+```
+
+
+```{r}
+
+seq(from = 1, to = 7)
+seq(from = 0, to = 10, by = 2) 
+
+rep(seq(from = 0, to = 10, by = 2), times = 3, each = 2)
+LETTERS
+seq_along(LETTERS[1:5])
+
+```
+
+
+
+#### The **Dreaded** for loop
+
+
+
+```{r}
+for (i in -30:100){
+  result <- F_to_C(i)
+  print(result)
+}
+```
+
+
+## What if we wanted to do something with the result of the iteration?
+
+1. Set a R object to NULL
+
+2. Set your for loop
+
+3. Save the result of your for loop into a dataframe each iteration
+
+4. append one row of the dataframe to the null object each iteration of the loop. 
+
+
+
+```{r}
+celcius.df <- NULL 
+for (i in -30:100){   
+result_i <- data.frame(F_to_C(i), i)   
+celcius.df <- rbind.data.frame(celcius.df, result_i) 
+}
+
+head(celcius.df)
+```
+
+
+#### More of a challenge
+
+```{r}
+EC50.data <- read.csv("../data/EC50_all.csv")
+
+isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == "ILSO_5-41c"] ~ 
+        EC50.data$conc[EC50.data$is == "ILSO_5-41c"], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+
+
+```
+
+
+
+
+```{r}
+nm <- unique(EC50.data$is)
+
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+}
+```
+
+
+
+```{r}
+EC50.ll4 <- NULL # create a null object 
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+    isolate.ec_i <- data.frame(nm[[i]], EC50) # create a one row dataframe containing just the isolate name and the EC50
+    colnames(isolate.ec_i) <- c("Isolate", "EC50") # change the column names
+    
+    # Then we need to append our one row dataframe to our null dataframe we created before
+    # and save it as EC50.ll4. 
+    EC50.ll4 <- rbind.data.frame(EC50.ll4, isolate.ec_i)
+}
+
+ggplot(EC50.ll4, aes(x = EC50)) + geom_histogram() + theme_classic() 
+```
+
+
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+
