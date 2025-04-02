@@ -2,7 +2,10 @@
 title: "coding_challenge_6"
 author: "AS-SL"
 date: "2025-03-27"
-output: html_document
+output:
+  md_document:
+    variant: markdown_github
+  html_document: default
 ---
 1. 2 pts. Regarding reproducibility, what is the main point of writing your own functions
 and iterations?
@@ -172,8 +175,8 @@ head(distance_df)
 Provide me a link to your github written as a clickable link in your .pdf or .docx
 
  
-[Link to this assignment]()
-[link to my github]()
+[Link to this assignment](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
+[link to my github](https://github.com/Aswystun/PLPA)
 
 
  
