@@ -15,10 +15,12 @@ they work. Give me specifics like syntax, where to write code, and how the resul
 returned.
 
 To write a function first we give our function a name that could be related to what it does , then we add the variable in a parentheses. We call for the function definition of Rstudio and write down what we want our function to do using code inside {}.Finally we add the return() output of the function 
-```{r}
+
+
 name<-function(variable){code
   return()}
-```
+
+
 
 To write for loop in R, the common synthax 
   1.- for()
@@ -28,12 +30,10 @@ To write for loop in R, the common synthax
  5. function
  6.print or show the output in some way
 
-```{r}
+
 for (i in sequence we want to iterate){
  funtion 
   output 
-}
-```
 
 Load packages
 
@@ -49,8 +49,8 @@ This dataset contains the population and coordinates (latitude and longitude) of
 
 3. 2 pts. Read in the Cities.csv file from Canvas using a relative file path.
 ```{r}
-Cities_US<- read.csv("Cities.csv")
-View(Cities_US)
+Cities_US<- read.csv("../data/Cities.csv")
+#View(Cities_US)
 ```
 
 4. 6 pts. Write a function to calculate the distance between two pairs of coordinates based on the Haversine formula (see below). The input into the function should be lat1, lon1, lat2, and lon2. The function should return the object distance_km. All the code below
@@ -126,24 +126,54 @@ first six rows of the dataframe are shown below.
 ## 5 Houston Auburn 993.0298
 ## 6 Dallas Auburn 1056.0217
 
+
+
+
 ```{r}
 
-city_names<-unique(Cities_US$city)
+# Subset Auburn, AL's coordinates
+AU <- Cities_US %>%
+  filter(city == "Auburn") %>%
+  select(lat, long)
 
-filtered_city<-Cities_US%>%
-  select(city,lat,long)%>%
+AU_lat <- AU$lat
+AU_long <- AU$long
 
-for (i in seq_along(city_names)){
+# Create an empty dataframe to store results
+distance_df <- data.frame(city_1 = character(),
+                          city_2 = character(),
+                          distance_from_auburn = numeric())
+
+# Loop through each city and compute distance
+for (i in 1:nrow(Cities_US)) {
+  city_name <- Cities_US$city[i]
+  city_lat <- Cities_US$lat[i]
+  city_long <- Cities_US$long[i]
   
+  # Compute distance only if it's not Auburn itself
+  if (!(city_name == "Auburn")) {
+    distance_km <- mad_function(AU_lat, AU_long, city_lat, city_long)
+  } else {
+    distance_km <- 0  # Distance to itself is 0
+  }
+  
+  distance_df <- rbind(distance_df, data.frame(city_1 = "Auburn",
+                                               city_2 = paste(city_name),
+                                               distance_from_auburn = distance_km))
 }
-  
+
+# View results
+head(distance_df)
+
 ```
+
 
 7. 2 pts. Commit and push a gfm .md file to GitHub inside a directory called Coding Challenge 6.
 Provide me a link to your github written as a clickable link in your .pdf or .docx
 
  
-
+[Link to this assignment]()
+[link to my github]()
 
 
  
