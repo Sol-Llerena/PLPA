@@ -1,4 +1,4 @@
-# <c> Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena. </c>
+# <p align="center"> Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena. </p>
 
 This repository currently has six directories. 
 1. [coding_challenge_6](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
@@ -10,7 +10,7 @@ This repository currently has six directories.
 6. [previous_assignments](https://github.com/Aswystun/PLPA/tree/master/previous_assignments)
 
 
-### Directory Tree:
+## Directory Tree:
 ```
 .
 ├── PLPA.Rproj
