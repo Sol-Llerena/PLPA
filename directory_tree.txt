@@ -1,17 +1,3 @@
-## Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena.
-
-This repository currently has six directories. 
-1. [coding_challenge_6](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
-- [GitHub-flavored Markdown File](https://github.com/Aswystun/PLPA/blob/master/coding_challenge_6/coding_challenge_6.md)
-2. [data](https://github.com/Aswystun/PLPA/tree/master/data)
-3. [ATS_loops_and_functions](https://github.com/Aswystun/PLPA/tree/master/loops_and_functions_hw)
-4. [pictures](https://github.com/Aswystun/PLPA/tree/master/pictures)
-5. [plots](https://github.com/Aswystun/PLPA/tree/master/plots)
-6. [previous_assignments](https://github.com/Aswystun/PLPA/tree/master/previous_assignments)
-
-
-### Directory Tree:
-```
 .
 ├── PLPA.Rproj
 ├── README.md
@@ -79,4 +65,5 @@ This repository currently has six directories.
     ├── markdown_notes_ATS.tex
     ├── markdown_tutorial.Rmd
     └── markdown_tutorial.html
-```
+
+16 directories, 51 files
