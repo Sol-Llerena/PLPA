@@ -6,25 +6,27 @@ output:
   md_document:
     variant: markdown_github
   html_document: default
+  pdf_document: default
 ---
 
 
-1. 4 pts. Read in the data called “PlantEmergence.csv” using a relative file path and load the
-following libraries. tidyverse, lme4, emmeans, multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting and Rep into factors using the function as.factor
+1. 4 pts. Read in the data called `“PlantEmergence.csv”` using a relative file path and load the
+following libraries. `tidyverse`, `lme4`, `emmeans`, `multcomp`, and `multcompView`. Turn the `Treatment` , `DaysAfterPlanting` and `Rep` into factors using the function as.factor
 
 ```{r}
 library(readr)
 Plant_Emergence <- read.csv("../data/PlantEmergence.csv")
 library(tidyverse)
 library(lme4)
-install.packages("estimability")
+#install.packages("estimability")
 library(estimability)
-install.packages("packages/emmeans_1.10.6.tar.gz", repos = NULL, type = "source")
+#install.packages("packages/emmeans_1.10.6.tar.gz", repos = NULL, type = "source")
 library(emmeans)
-install.packages("packages/multcomp_1.4-26.tar.gz", repos = NULL, type = "source")
+#install.packages("packages/multcomp_1.4-26.tar.gz", repos = NULL, type = "source")
 library(multcomp)
-install.packages("multcompView")
+#install.packages("multcompView")
 library(multcompView)
+library(ggplot2)
 
 
 # Turn the Treatment , DaysAfterPlanting and Rep into factors using the function as.factor
@@ -38,8 +40,8 @@ str(Plant_Emergence)
 ```
 
 
-2. 5 pts. Fit a linear model to predict Emergence using Treatment and
-DaysAfterPlanting along with the interaction. Provide the summary of the linear
+2. 5 pts. Fit a linear model to predict `Emergence` using `Treatment` and
+`DaysAfterPlanting` along with the interaction. Provide the summary of the linear
 model and ANOVA results.
 
 
@@ -66,16 +68,94 @@ anova(lm1)
 ```{r}
 
 # Or like this, these are the same thing:
-lm1 <- lm(Emergence~Treatment * DaysAfterPlanting, data = Plant_Emergence)
+lm2 <- lm(Emergence~Treatment + DaysAfterPlanting, data = Plant_Emergence)
 
-summary(lm1)
-anova(lm1)
+summary(lm2)
+anova(lm2)
 
 ```
 
 
+The coefficient estimate for Treatment 2 was -134.531, therefore, the intercept for Treatment 2 would be *182.163 - 134.531 = 47.632* 
+
+The slope of Treatment 2 in our model was negative with significance, which means the mean of plant emergence is negatively effected by Treatment 2 by an average of 47 units.
 
 
+4. 5 pts. Calculate the least square means for `Treatment` using the emmeans package and perform a Tukey separation with the compact letter display using the cld function. Interpret the results.
+
+
+
+```{r}
+
+
+lsmeans <- emmeans(lm2, ~Treatment) # estimates least-square means of variety within site vs year
+
+Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) # contrast with Tukey adjustment by default. 
+Results_lsmeans
+
+```
+
+
+ 
+Based on the Tukey comparisons, there are groups of Treatments that seem to be affecting the plant emergence in different ways. Groups 5, 3, and 6; 8, 4, 9, and 1; as well as individual groups 7 and 2 all have varying effects on plant emergence, but each group has similar effects.  
+
+
+
+
+
+5.	4 pts. The provided function lets you dynamically add a linear model plus one factor from that model and plots a bar chart with letters denoting treatment differences. Use this model to generate the plot shown below. Explain the significance of the letters. 
+
+
+
+```{r}
+plot_cldbars_onefactor <- function(lm2,Treatment) {
+  data <- lm2$model
+  variables <- colnames(lm2$model)
+  dependent_var <- variables[1]
+  independent_var <- variables[2:length(variables)]
+
+  lsmeans <- emmeans(lm2, as.formula(paste("~", "Treatment"))) # estimate lsmeans 
+  Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE, Letters = letters) # contrast with Tukey adjustment by default.
+
+
+   # Extracting the letters for the bars
+  sig.diff.letters <- data.frame(Results_lsmeans$emmeans[,1], 
+                                 str_trim(Results_lsmeans$emmeans[,7]))
+  colnames(sig.diff.letters) <- c("Treatment", "Letters")
+  
+  # for plotting with letters from significance test
+  ave_stand2 <- lm2$model %>%
+    group_by(!!sym("Treatment")) %>%
+    dplyr::summarize(
+      ave.emerge = mean(.data[[dependent_var]], na.rm = TRUE),
+      se = sd(.data[[dependent_var]]) / sqrt(n())
+    ) %>%
+    left_join(sig.diff.letters, by = "Treatment") %>%
+    mutate(letter_position = ave.emerge + 10 * se)
+  
+  plot <- ggplot(data, aes(x = !! sym("Treatment"), y = !! sym("Emergence"))) + 
+    stat_summary(fun = mean, geom = "bar") +
+    stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.5) +
+    ylab("Number of emerged plants") + 
+    geom_jitter(width = 0.02, alpha = 0.5) +
+    geom_text(data = ave_stand2, aes(label = Letters, y = letter_position), size = 5) +
+    xlab(as.character("Treatment")) +
+    theme_classic()
+  
+  return(plot)
+}
+plot_cldbars_onefactor(lm2 = lm2, Treatment =  "Treatment")
+
+```
+
+Each bar has a letter representation for which group they are assigned, based on the effect that treatment has on the number of emerging plants. For example, only treatment two has the c group, as it is the only treatment with so few emerging plants, while other treatments share a letter "a" or "b" with another treatment.
+
+
+6.	2 pts. Generate the gfm .md file along with a .html, .docx, or .pdf. Commit, and push the .md file to github and turn in the .html, .docx, or .pdf to Canvas. Provide me a link here to your github.
+
+
+[link to github](https://github.com/Aswystun/PLPA)
+[link to this assignment](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_7)
 
 
 
