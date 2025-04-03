@@ -1,0 +1,330 @@
+---
+title: "Linear Models ATS Homework"
+author: "ATS"
+date: "2025-04-2"
+output:
+  md_document:
+    variant: markdown_github
+  html_document: default
+---
+
+## Packages needed for these notes:
+
+```{r}
+library(tidyverse)
+library(lme4)
+# install.packages("packages/emmeans_1.10.6.tar.gz", repos = NULL, type = "source")
+library(emmeans)
+# install.packages("packages/multcomp_1.4-26.tar.gz", repos = NULL, type = "source")
+library(multcomp)
+# install.packages("multcompView")
+library(multcompView)
+```
+
+
+
+# Introduction to regression analysis in R
+
+
+y(hat) = β0 + β1x
+
+where y(hat) = equation 
+  - β0 = intercept
+  - β1 = slope 
+  - x = x points
+
+The actual modeled line is equal to the equation adds on the error term.
+yi = β0 + β1xi + ε~N(0,σ)
+
+
+where yi (y sub i) = each point on the y axis 
+  - β0 = intercept
+  - β1 = slope 
+  - xi = each x point 
+  - then ε = error
+  - and N(0,σ) = normal distribution with:
+    - mean = 0 
+    - standard deviation = sigma
+
+The goal of all of this is to estimate three terms. 
+  - slope
+  - intercept
+  - standard deviation4
+ 
+ *The smaller the SSE and higher the SSR, the smaller the p-value*
+
+*Then, we want to know if it is statistically significant. What is the chance we get the result? - that is your p-value.*
+
+ **Connect in your brain which test I will need to use for my data**
+
+
+
+## cont<sup>s</sup> X & cont<sup>s</sup> Y
+
+Loading in cars database as example
+
+```{r}
+data("mtcars")
+```
+
+The variables inside the cars dataset include: 
+
+  - mpg = the mpg
+  - cyl = number of cylinders
+  - disp = displacement
+  - hp = gross horsepower
+  - drat = rear axle ratio
+  - wt = weight
+  - qsec = quarter mile time 
+  - vs = engine shape V = 0 or Straight = 1
+  - am = Transmission type; 0 = auto, 1 = manual
+  - gear = number of forward gears
+  - carb = number of carburetors
+
+If you have two continuous variables you will want a scatter plot
+
+#### Weight vs MPG
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_smooth(method = lm, se = FALSE, color = "grey") +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black") +
+  theme_classic()
+```
+
+
+This looks to be a general negative relationship, but how can we be sure?
+
+### linear models
+
+```{r}
+lm(mpg~wt, data = mtcars)
+```
+
+
+```{r}
+lm1 <- lm(mpg~wt, data = mtcars)
+summary(lm1)
+```
+
+
+## Anovas
+
+Analysis of variance is used for catagorical variables, but can be used on linear models as well.
+
+
+
+```{r}
+anova(lm1)
+```
+
+## Correlation Test
+
+```{r}
+cor.test(mtcars$mpg,mtcars$wt)
+```
+
+
+## Assumptions
+
+In general, there are several assumptions in a regression, linear model, ANOVA, or whatever you want to call it.
+
+They are:
+
+- y is continuous
+- error is normally distributed 
+- relationship is linear 
+- homoskedasticity 
+- sigma is consistent 
+- independent samples
+
+
+### Getting residuals from model above
+
+```{r}
+model <- lm(mpg~wt, data = mtcars)
+
+ggplot(model, aes(y = .resid, x = .fitted)) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+```
+
+
+
+## New Dataset - Bull Richness
+
+
+```{r}
+bull.rich <- read.csv("../data/Bull_richness.csv")
+```
+
+
+Demonstrating: 
+- Anova w/ two groups (ttest)
+
+- Anova w/ more than one category MANOVA
+
+
+
+```{r}
+bull.rich.sub <- bull.rich %>%
+  filter(GrowthStage == "V8" & Treatment == "Conv.") 
+ 
+  
+t.test(richness ~ Fungicide, data = bull.rich.sub)
+
+```
+
+```{r}
+summary(lm(richness ~ Fungicide, data = bull.rich.sub))
+
+```
+
+
+## Multiple Categories
+
+
+
+
+
+subset data
+
+
+```{r}
+bull.rich.sub2 <- bull.rich %>%
+  filter(Fungicide == "C" & Treatment == "Conv." & Crop == "Corn")
+```
+
+
+
+```{r}
+ggplot(bull.rich.sub2, aes(x = GrowthStage, y = richness)) +
+  geom_boxplot()
+```
+
+let's move the bars so the factors are in ascending order
+
+```{r}
+bull.rich.sub2$GrowthStage <- factor(bull.rich.sub2$GrowthStage, levels = c("V6", "V8", "V15"))
+
+ggplot(bull.rich.sub2, aes(x = GrowthStage, y = richness)) +
+  geom_boxplot()
+```
+
+
+```{r}
+lm3 <- lm(richness ~ GrowthStage, data = bull.rich.sub2)
+summary(lm3)
+```
+
+
+same p-value w
+
+
+```{r}
+anova(lm3)
+```
+
+
+
+## emmeans and multcomp packages
+
+
+```{r}
+lsmeans <- emmeans(lm3, ~GrowthStage) # estimates least-square means of variety within site vs year
+
+
+
+Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) # contrast with Tukey adjustment by default. 
+Results_lsmeans
+  
+```
+
+## Interaction Terms:
+The interactions between factors. In other words: what if the effect of one factor depends on the other?
+
+
+```{r}
+bull.rich.sub3 <- bull.rich %>%
+  filter(Treatment == "Conv." & Crop == "Corn")
+
+bull.rich.sub3$GrowthStage <- factor(bull.rich.sub3$GrowthStage, levels = c("V6", "V8", "V15"))
+```
+
+
+
+
+
+
+```{r}
+# write it like this
+lm.inter <- lm(richness ~ GrowthStage + Fungicide + GrowthStage:Fungicide, data = bull.rich.sub3)
+
+# or like this
+lm.interB <-lm(richness ~ GrowthStage*Fungicide, data = bull.rich.sub3)
+
+
+summary(lm.inter)
+```
+
+
+```{r}
+anova(lm.inter)
+```
+Effect of fungicide depends on the growth stage
+
+
+
+
+
+three seperate tests: one within each growth stage of the effect of fungicide.
+Did not effect richness except v8
+
+```{r}
+lsmeans <- emmeans(lm.inter, ~Fungicide|GrowthStage) # estimate lsmeans of variety within siteXyear
+Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) # contrast with Tukey ajustment
+Results_lsmeans
+```
+
+
+
+```{r}
+bull.rich.sub3 %>%
+  ggplot(aes(x = GrowthStage, y = richness, fill = Fungicide)) +
+  geom_boxplot()
+```
+
+
+## Mixed Effects Models
+All mixed-effects mdoels have a common fixed and random effects. 
+
+*Common fixed effects*
+- Treatment *
+- Species *
+- Genes
+
+*Common random effects (blocking factor)*
+- Year *
+- Replicate * 
+- Trial
+- Individuals  *
+- Fields *
+
+(*) = possible effects for my data
+
+```{r}
+lm.inter2<-lmer(richness ~ GrowthStage*Fungicide + (1|Rep), data = bull.rich.sub3)
+summary(lm.inter2)
+
+```
+(compare with above)
+```{r}
+summary(lm.inter)
+```
+
+
+
+
+
