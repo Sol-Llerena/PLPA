@@ -1,4 +1,4 @@
-## Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena.
+# <c> Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena. </c>
 
 This repository currently has six directories. 
 1. [coding_challenge_6](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
