@@ -3,10 +3,11 @@ title: "Linear Models ATS Homework"
 author: "Alex Swystun & Sol Llerena"
 date: "2025-04-2"
 output:
+  pdf_document: default
   md_document:
     variant: markdown_github
   html_document: default
-  pdf_document: default
+  
 ---
 
 
