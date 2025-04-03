@@ -6,7 +6,7 @@ repetitive actions or mathemathical operations, it is better to have a
 function or iteration to go trough all the data instead of copying and
 pasting the information. It also makes it easier for someone else to
 understand what we are doing. Writing functions and using iterations
-helps us understand what we didi as well so that we can re-run our data
+helps us understand what we did as well so that we can re-run our data
 or use the same analysis for a different set of data.
 
 1.  2 pts. In your own words, describe how to write a function and a for
@@ -19,15 +19,15 @@ call for the function definition of Rstudio and write down what we want
 our function to do using code inside {}.Finally we add the return()
 output of the function
 
-name\<-function(variable){code return()}
+name \<-function(variable){code return()}
 
-To write for loop in R, the common synthax 1.- for() 2. i common name or
-a varible 3. in (sequence we want to iterate) 4. {} to tell it what to
-do with that input 5. function 6.print or show the output in some way
+To write for loop in R, the common syntax - for() - i common name or a
+variable - in (sequence we want to iterate) - {} to tell it what to do
+with that input - function - print or show the output in some way
 
-for (i in sequence we want to iterate){ funtion output
+for (i in sequence we want to iterate){ function output}
 
-Load packages
+Loading packages
 
 ``` r
 library(readr)
@@ -92,7 +92,7 @@ Cities_US<- read.csv("../data/Cities.csv")
 Create function
 
 ``` r
-mad_function<- function(lat1,lon1,lat2,lon2){# convert to radians
+mad_function<- function(lat1,lon1,lat2,lon2){
 rad.lat1 <- lat1 * pi/180
 rad.lon1 <- lon1 * pi/180
 rad.lat2 <- lat2 * pi/180
@@ -109,7 +109,8 @@ distance_km <- ((earth_radius * c)/1000)
 return(distance_km)}
 ```
 
-test the function
+1.  5 pts. Using your function, compute the distance between Auburn, AL
+    and New York City
 
 ``` r
 mad_function(32.6087,-85.4903,40.6943,-73.9249)
@@ -117,16 +118,8 @@ mad_function(32.6087,-85.4903,40.6943,-73.9249)
 
     ## [1] 1367.854
 
-1.  5 pts. Using your function, compute the distance between Auburn, AL
-    and New York City
-
-<!-- -->
-
 1.  Subset/filter the Cities.csv data to include only the latitude and
     longitude values you need and input as input to your function.
-
-sub-setting the csv file to include only the latitude and longitude
-values needed
 
 ``` r
 NY<-Cities_US%>%
@@ -139,7 +132,7 @@ NY
     ## 1 New York 40.6943 -73.9249
     ## 2   Auburn 32.6087 -85.4903
 
-1.  The output of your function should be 1367.854 km
+The output of your function should be 1367.854 km
 
 ``` r
 mad_function(NY[1,2],NY[1,3],NY[2,2],NY[2,3])
@@ -149,17 +142,32 @@ mad_function(NY[1,2],NY[1,3],NY[2,2],NY[2,3])
 
 1.  6 pts. Now, use your function within a for loop to calculate the
     distance between all other cities in the data. The output of the
-    first 9 iterations is shown below. \## \[1\] 1367.854 \## \[1\]
-    3051.838 \## \[1\] 1045.521 \## \[1\] 916.4138 \## \[1\] 993.0298
-    \## \[1\] 1056.022 \## \[1\] 1239.973 \## \[1\] 162.5121 \## \[1\]
-    1036.99 Bonus point if you can have the output of each iteration
-    append a new row to a dataframe, generating a new column of data. In
-    other words, the loop should create a dataframe with three columns
-    called city1, city2, and distance_km, as shown below. The first six
-    rows of the dataframe are shown below. \## City1 City2 Distance_km
-    \## 1 New York Auburn 1367.8540 \## 2 Los Angeles Auburn 3051.8382
-    \## 3 Chicago Auburn 1045.5213 \## 4 Miami Auburn 916.4138 \## 5
-    Houston Auburn 993.0298 \## 6 Dallas Auburn 1056.0217
+    first 9 iterations is shown below.
+
+-   1367.854
+-   3051.838
+-   1045.521
+-   916.4138
+-   993.0298
+-   1056.022
+-   1239.973
+-   162.5121
+-   1036.99
+
+Bonus point if you can have the output of each iteration append a new
+row to a dataframe, generating a new column of data. In other words, the
+loop should create a dataframe with three columns called city1, city2,
+and distance_km, as shown below. The first six rows of the dataframe are
+shown below.
+
+|    City1    | City2  | Distance_km |
+|:-----------:|:------:|:-----------:|
+|  New York   | Auburn |  1367.8540  |
+| Los Angeles | Auburn |  3051.8382  |
+|   Chicago   | Auburn |  1045.5213  |
+|    Miami    | Auburn |  916.4138   |
+|   Houston   | Auburn |  993.0298   |
+|   Dallas    | Auburn |  1056.0217  |
 
 ``` r
 # Subset Auburn, AL's coordinates
@@ -205,10 +213,15 @@ head(distance_df)
     ## 5 Auburn     Houston             993.0298
     ## 6 Auburn      Dallas            1056.0217
 
+``` r
+View(distance_df)
+```
+
 1.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
     called Coding Challenge 6. Provide me a link to your github written
     as a clickable link in your .pdf or .docx
 
 [Link to this
 assignment](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
+
 [link to my github](https://github.com/Aswystun/PLPA)
