@@ -1,0 +1,81 @@
+---
+title: "Linear Models ATS Homework"
+author: "Alex Swystun & Sol Llerena"
+date: "2025-04-2"
+output:
+  md_document:
+    variant: markdown_github
+  html_document: default
+---
+
+
+1. 4 pts. Read in the data called “PlantEmergence.csv” using a relative file path and load the
+following libraries. tidyverse, lme4, emmeans, multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting and Rep into factors using the function as.factor
+
+```{r}
+library(readr)
+Plant_Emergence <- read.csv("../data/PlantEmergence.csv")
+library(tidyverse)
+library(lme4)
+install.packages("estimability")
+library(estimability)
+install.packages("packages/emmeans_1.10.6.tar.gz", repos = NULL, type = "source")
+library(emmeans)
+install.packages("packages/multcomp_1.4-26.tar.gz", repos = NULL, type = "source")
+library(multcomp)
+install.packages("multcompView")
+library(multcompView)
+
+
+# Turn the Treatment , DaysAfterPlanting and Rep into factors using the function as.factor
+
+Plant_Emergence$DaysAfterPlanting <- as.factor(Plant_Emergence$DaysAfterPlanting)
+Plant_Emergence$Treatment <- as.factor(Plant_Emergence$Treatment)
+Plant_Emergence$Rep <- as.factor(Plant_Emergence$Rep)
+
+
+str(Plant_Emergence)
+```
+
+
+2. 5 pts. Fit a linear model to predict Emergence using Treatment and
+DaysAfterPlanting along with the interaction. Provide the summary of the linear
+model and ANOVA results.
+
+
+```{r}
+
+# We can make the model like this
+lm1 <- lm(Emergence~Treatment + DaysAfterPlanting + Treatment:DaysAfterPlanting, data = Plant_Emergence)
+
+# Or like this, these are the same thing:
+lm1 <- lm(Emergence~Treatment * DaysAfterPlanting, data = Plant_Emergence)
+
+summary(lm1)
+anova(lm1)
+
+```
+
+
+3.	5 pts. Based on the results of the linear model in question 2, do you need to fit the interaction term? Provide a simplified linear model without the interaction term but still testing both main effects. Provide the summary and ANOVA results. Then, interpret the intercept and the coefficient for Treatment 2.
+
+  Based on the results, no, it does not look like we need to fit the interaction term, as the interaction between `Treatment` and `DaysAfterPlanting` was not significant for the anova.  
+
+
+
+```{r}
+
+# Or like this, these are the same thing:
+lm1 <- lm(Emergence~Treatment * DaysAfterPlanting, data = Plant_Emergence)
+
+summary(lm1)
+anova(lm1)
+
+```
+
+
+
+
+
+
+
