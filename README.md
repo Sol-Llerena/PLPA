@@ -1,13 +1,14 @@
 # <p align="center"> Welcome to the shared PLPA 6820 GitHub Repository for Alex Swystun and Sol Llerena. </p>
 
-This repository currently has six directories. 
+This repository currently has seven directories. 
 1. [coding_challenge_6](https://github.com/Aswystun/PLPA/tree/master/coding_challenge_6)
 - [GitHub-flavored Markdown File](https://github.com/Aswystun/PLPA/blob/master/coding_challenge_6/coding_challenge_6.md)
 2. [data](https://github.com/Aswystun/PLPA/tree/master/data)
-3. [ATS_loops_and_functions](https://github.com/Aswystun/PLPA/tree/master/loops_and_functions_hw)
-4. [pictures](https://github.com/Aswystun/PLPA/tree/master/pictures)
-5. [plots](https://github.com/Aswystun/PLPA/tree/master/plots)
-6. [previous_assignments](https://github.com/Aswystun/PLPA/tree/master/previous_assignments)
+3. [ATS linear models HW](https://github.com/Aswystun/PLPA/tree/master/linear_models_hw)
+4. [ATS loops and functions HW](https://github.com/Aswystun/PLPA/tree/master/loops_and_functions_hw)
+5. [pictures](https://github.com/Aswystun/PLPA/tree/master/pictures)
+6. [plots](https://github.com/Aswystun/PLPA/tree/master/plots)
+7. [previous_assignments](https://github.com/Aswystun/PLPA/tree/master/previous_assignments)
 
 
 ## Directory Tree:
@@ -30,6 +31,19 @@ This repository currently has six directories.
 │   ├── corr.csv
 │   └── diff_abund.csv
 ├── directory_tree.txt
+├── linear_models_hw
+│   ├── linear_models_ATS_hw.Rmd
+│   ├── linear_models_ATS_hw.md
+│   ├── linear_models_ATS_hw_files
+│   │   └── figure-markdown_github
+│   │       ├── unnamed-chunk-13-1.png
+│   │       ├── unnamed-chunk-14-1.png
+│   │       ├── unnamed-chunk-22-1.png
+│   │       ├── unnamed-chunk-3-1.png
+│   │       └── unnamed-chunk-8-1.png
+│   └── packages
+│       ├── emmeans_1.10.6.tar.gz
+│       └── multcomp_1.4-26.tar.gz
 ├── loops_and_functions_hw
 │   ├── loops_and_functions_hw_ATS.Rmd
 │   ├── loops_and_functions_hw_ATS.md
