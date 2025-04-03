@@ -9,7 +9,7 @@ understand what we are doing. Writing functions and using iterations
 helps us understand what we did as well so that we can re-run our data
 or use the same analysis for a different set of data.
 
-1.  2 pts. In your own words, describe how to write a function and a for
+2.  2 pts. In your own words, describe how to write a function and a for
     loop in R and how they work. Give me specifics like syntax, where to
     write code, and how the results are returned.
 
@@ -75,7 +75,7 @@ this, you’ll write a for loop that goes through each city in the dataset
 and computes the distance from Auburn. Detailed steps are provided
 below.
 
-1.  2 pts. Read in the Cities.csv file from Canvas using a relative file
+3.  2 pts. Read in the Cities.csv file from Canvas using a relative file
     path.
 
 ``` r
@@ -83,7 +83,7 @@ Cities_US<- read.csv("../data/Cities.csv")
 #View(Cities_US)
 ```
 
-1.  6 pts. Write a function to calculate the distance between two pairs
+4.  6 pts. Write a function to calculate the distance between two pairs
     of coordinates based on the Haversine formula (see below). The input
     into the function should be lat1, lon1, lat2, and lon2. The function
     should return the object distance_km. All the code below needs to go
@@ -109,7 +109,7 @@ distance_km <- ((earth_radius * c)/1000)
 return(distance_km)}
 ```
 
-1.  5 pts. Using your function, compute the distance between Auburn, AL
+5.  5 pts. Using your function, compute the distance between Auburn, AL
     and New York City
 
 ``` r
@@ -118,7 +118,7 @@ mad_function(32.6087,-85.4903,40.6943,-73.9249)
 
     ## [1] 1367.854
 
-1.  Subset/filter the Cities.csv data to include only the latitude and
+6.  Subset/filter the Cities.csv data to include only the latitude and
     longitude values you need and input as input to your function.
 
 ``` r
@@ -140,7 +140,7 @@ mad_function(NY[1,2],NY[1,3],NY[2,2],NY[2,3])
 
     ## [1] 1367.854
 
-1.  6 pts. Now, use your function within a for loop to calculate the
+7.  6 pts. Now, use your function within a for loop to calculate the
     distance between all other cities in the data. The output of the
     first 9 iterations is shown below.
 
@@ -213,7 +213,7 @@ head(distance_df)
     ## 5 Auburn     Houston             993.0298
     ## 6 Auburn      Dallas            1056.0217
 
-1.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
+8.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
     called Coding Challenge 6. Provide me a link to your github written
     as a clickable link in your .pdf or .docx
 
