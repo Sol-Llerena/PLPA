@@ -180,11 +180,8 @@ for (i in 1:nrow(Cities_US)) {
 head(distance_df)
 ```
 
-```{r}
-View(distance_df)
-```
 
-9.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
+8.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
     called Coding Challenge 6. Provide me a link to your github written
     as a clickable link in your .pdf or .docx
 

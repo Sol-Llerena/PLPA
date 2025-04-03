@@ -213,10 +213,6 @@ head(distance_df)
     ## 5 Auburn     Houston             993.0298
     ## 6 Auburn      Dallas            1056.0217
 
-``` r
-View(distance_df)
-```
-
 1.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
     called Coding Challenge 6. Provide me a link to your github written
     as a clickable link in your .pdf or .docx
